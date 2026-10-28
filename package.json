@@ -1,0 +1,15 @@
+{
+  "name": "ultimate-convertor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Convert images, video, audio, data and documents fast. Tauri + Rust.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "test": "cd src-tauri && cargo test -- --test-threads=2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4"
+  }
+}

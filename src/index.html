@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ultimate Convertor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <img src="assets/icon.svg" alt="" class="brand-icon" />
+        <span>Ultimate <b>Convertor</b></span>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="files" role="tab"><i data-icon="files"></i><span data-i18n="tabFiles"></span></button>
+        <button class="tab" data-tab="units" role="tab"><i data-icon="ruler"></i><span data-i18n="tabUnits"></span></button>
+        <button class="tab" data-tab="numbers" role="tab"><i data-icon="hash"></i><span data-i18n="tabNumbers"></span></button>
+        <button class="tab" data-tab="colors" role="tab"><i data-icon="palette"></i><span data-i18n="tabColors"></span></button>
+        <span class="tab-glider"></span>
+      </nav>
+      <div class="lang" role="group">
+        <button data-lang="ro">RO</button>
+        <button data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Files -->
+      <section class="panel active" id="panel-files">
+        <div class="files-main">
+          <div class="dropzone" id="dropzone">
+            <div class="drop-art">
+              <span class="orb"></span>
+              <i data-icon="refresh" class="drop-icon"></i>
+            </div>
+            <h1 data-i18n="dropTitle"></h1>
+            <p data-i18n="dropSub"></p>
+            <div class="drop-actions">
+              <button class="btn primary" data-action="pick-files"><i data-icon="plus"></i><span data-i18n="pickFiles"></span></button>
+              <button class="btn ghost" data-action="pick-folder"><i data-icon="folder"></i><span data-i18n="pickFolder"></span></button>
+            </div>
+            <div class="format-cloud" id="format-cloud"></div>
+          </div>
+
+          <div class="worklist hidden" id="worklist">
+            <div class="list-toolbar">
+              <div class="list-count" id="list-count"></div>
+              <div class="spacer"></div>
+              <button class="btn small ghost" data-action="pick-files"><i data-icon="plus"></i><span data-i18n="add"></span></button>
+              <button class="btn small ghost" data-action="clear-done" id="btn-clear-done"><i data-icon="check"></i><span data-i18n="clearDone"></span></button>
+              <button class="btn small ghost" data-action="clear"><i data-icon="trash"></i><span data-i18n="clear"></span></button>
+            </div>
+            <div class="groups" id="groups"></div>
+            <ul class="files" id="files"></ul>
+          </div>
+          <div class="drop-overlay" id="drop-overlay"><div><i data-icon="plus"></i><span data-i18n="dropHere"></span></div></div>
+        </div>
+
+        <aside class="settings">
+          <h2 data-i18n="settings"></h2>
+
+          <label class="field">
+            <span class="field-label"><span data-i18n="quality"></span><output id="quality-out">85</output></span>
+            <input type="range" id="quality" min="10" max="100" step="1" value="85" />
+            <small data-i18n="qualityHint"></small>
+          </label>
+
+          <div class="field">
+            <span class="field-label" data-i18n="maxSize"></span>
+            <div class="seg" id="maxside">
+              <button data-v="0" class="on" data-i18n="original"></button>
+              <button data-v="3840">4K</button>
+              <button data-v="1920">1920</button>
+              <button data-v="1280">1280</button>
+              <button data-v="custom">…</button>
+            </div>
+            <input type="number" id="maxside-custom" class="text hidden" min="16" max="65535" step="1" placeholder="px" />
+          </div>
+
+          <div class="field">
+            <span class="field-label" data-i18n="saveTo"></span>
+            <div class="seg" id="outmode">
+              <button data-v="same" class="on" data-i18n="sameFolder"></button>
+              <button data-v="other" data-i18n="otherFolder"></button>
+            </div>
+            <button class="outdir hidden" id="outdir" title=""><i data-icon="folder"></i><span id="outdir-name"></span></button>
+          </div>
+
+          <label class="toggle">
+            <input type="checkbox" id="fast" checked />
+            <span class="switch"></span>
+            <span><b data-i18n="fast"></b><small data-i18n="fastHint"></small></span>
+          </label>
+
+          <label class="toggle">
+            <input type="checkbox" id="merge-pdf" />
+            <span class="switch"></span>
+            <span><b data-i18n="mergePdf"></b><small data-i18n="mergePdfHint"></small></span>
+          </label>
+
+          <div class="spacer"></div>
+          <div class="summary hidden" id="summary"></div>
+          <button class="btn convert" id="convert" disabled><i data-icon="zap"></i><span id="convert-label"></span></button>
+        </aside>
+      </section>
+
+      <!-- Units -->
+      <section class="panel" id="panel-units">
+        <div class="tool-wrap">
+          <div class="chips" id="unit-cats"></div>
+          <div class="converter-card">
+            <div class="conv-side">
+              <span class="conv-label" data-i18n="from"></span>
+              <input class="big-input" id="unit-a" inputmode="decimal" value="1" />
+              <select id="unit-a-sel"></select>
+            </div>
+            <button class="swap" id="unit-swap" data-i18n-title="swap"><i data-icon="swap"></i></button>
+            <div class="conv-side">
+              <span class="conv-label" data-i18n="to"></span>
+              <input class="big-input" id="unit-b" inputmode="decimal" />
+              <select id="unit-b-sel"></select>
+            </div>
+          </div>
+          <h3 data-i18n="allUnits"></h3>
+          <div class="unit-table" id="unit-table"></div>
+        </div>
+      </section>
+
+      <!-- Numbers -->
+      <section class="panel" id="panel-numbers">
+        <div class="tool-wrap">
+          <h3 data-i18n="numBases"></h3>
+          <div class="num-grid" id="num-grid"></div>
+          <h3 data-i18n="base64"></h3>
+          <div class="b64">
+            <label><span data-i18n="text"></span><textarea id="b64-text" spellcheck="false"></textarea></label>
+            <label><span data-i18n="base64Label"></span><textarea id="b64-code" spellcheck="false"></textarea></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Colors -->
+      <section class="panel" id="panel-colors">
+        <div class="tool-wrap color-wrap">
+          <div class="color-hero">
+            <label class="swatch" id="swatch" data-i18n-title="colorPicker">
+              <input type="color" id="color-pick" value="#8b7bff" />
+            </label>
+            <div class="color-fields" id="color-fields"></div>
+          </div>
+          <div class="contrast" id="contrast"></div>
+          <h3 data-i18n="shades"></h3>
+          <div class="shades" id="shades"></div>
+        </div>
+      </section>
+    </main>
+    <div class="toast" id="toast"></div>
+  </body>
+</html>

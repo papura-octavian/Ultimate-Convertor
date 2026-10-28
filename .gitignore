@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vscode/
+.vs/
+.claude/
+
+# ffmpeg is downloaded by the release workflow (and by hand for development), never committed
+src-tauri/binaries/*
+!src-tauri/binaries/.gitkeep
